@@ -1,0 +1,13 @@
+#capetas
+ads/
+.well-known/
+
+# Ignorar todos los archivos error_log en cualquier carpeta
+error_log
+*/error_log
+
+#ignorar conexión
+*/conexion.php
+
+*/images
+
