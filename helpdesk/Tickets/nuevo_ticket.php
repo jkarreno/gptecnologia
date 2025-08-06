@@ -81,7 +81,16 @@
 						<td class="texto" align="left">Modelo:</td>
 						<td class="texto" align="left"><input type="text" name="modelo" id="modelo" class="input" size="50"></td>
 						<td class="texto" align="left">No. de Serie:</td>
-						<td class="texto" align="left"><input type="text" name="nserie" id="nserie" class="input" size="50"></td>
+						<td class="texto" align="left">
+							<input type="text" list="numseries" id="nserie" name="nserie" class="input" size="50" />
+							<datalist id="numseries" class="input">';
+		$ResNumSerie = mysqli_query($conn, "SELECT NumSerie FROM `tickets` WHERE Cuenta = '".$_SESSION["cuenta"]."' GROUP BY NumSerie ORDER BY NumSerie ASC;");
+		while($RResNS = mysqli_fetch_array($ResNumSerie))
+		{
+			$cadena.='			<option value="'.$RResNS["NumSerie"].'"></option>';
+		}
+		$cadena.='			</datalist>
+						</td>
 						<td class="texto" align="left">No. de Inventario:</td>
 						<td class="texto" align="left"><input type="text" name="ninventario" id="ninventario" class="input" size="50"></td>
 					</tr>
