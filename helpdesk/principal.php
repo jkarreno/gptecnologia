@@ -24,7 +24,16 @@ include ("conexion.php");
 	<link rel="stylesheet" href="estilos/estilos.css">
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
 	<script src="https://kit.fontawesome.com/2df1cf6d50.js" crossorigin="anonymous"></script>
+
+	<link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css">
+	<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+	<script src="https://cdn.datatables.net/fixedcolumns/4.2.2/js/dataTables.fixedColumns.min.js"></script>
+	<script src="https://cdn.datatables.net/scroller/2.1.1/css/scroller.dataTables.min.css"></script>
+	<script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/ashl1/datatables-rowsgroup@1.0.0/dataTables.rowsGroup.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/datatables-rowsgroup@1.0.0/dataTables.rowsGroup.js"></script>
 	
 	<script src="js/codigo.js"></script>
 </head>
@@ -46,14 +55,9 @@ include ("conexion.php");
 						</ul>
 					<li>
 					<li class="submenu">
-						<a href="#" onclick="xajax_pacientes()"><i class="fa fa-file-text-o"></i>Reportes<span class="caret fa fa-caret-down"></span></a>
+						<a href="#"><i class="fa fa-file-text-o"></i>Reportes<span class="caret fa fa-caret-down"></span></a>
 						<ul class="children">
-							<li><a href="#"><span class="fa fa-file-text"></span>Tickets Recibidos</a></li>
-							<li><a href="#"><span class="fa fa-file-text"></span>Tickets Mensuales</a></li>
-							<li><a href="#"><span class="fa fa-file-text"></span>Tickets Pendientes</a></li>
-							<li><a href="#"><span class="fa fa-file-text"></span>Refacciones Utilizadas</a></li>
-							<li><a href="#"><span class="fa fa-file-text"></span>Tickets por Usuarios</a></li>
-							<li><a href="#"><span class="fa fa-file-text"></span>Tickets por Equipos</a></li>
+							<li><a href="#" onclick="tickets_cuenta('0')"><span class="fa fa-file-text"></span>Tickets Por Cuenta</a></li>
 						</ul>
 					</li>
 					<li><a href="#"><i class="fa fa-desktop" aria-hidden="true"></i>Inventario</a></li>
@@ -137,6 +141,15 @@ function status_ticket(){
 	$.ajax({
 				type: 'POST',
 				url : 'Tickets/status_ticket.php'
+	}).done (function ( info ){
+		$('#contenido').html(info);
+	});
+}
+function tickets_cuenta(cuenta){
+	$.ajax({
+				type: 'POST',
+				url : 'Reportes/tickets_cuenta.php', 
+				data: 'cuenta=' + cuenta
 	}).done (function ( info ){
 		$('#contenido').html(info);
 	});
