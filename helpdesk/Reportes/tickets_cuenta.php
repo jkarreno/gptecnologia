@@ -8,7 +8,7 @@ include ("../funciones.php");
 $cadena='<table border="1" bordercolor="#FFFFFF" cellpadding="5" cellspacing="0" width="98%">
             <tr>
                 <td align="center" bgcolor="#ffffff">
-                    <select name="cuenta" id="cuenta" onchange="tickets_cuenta(this.value)">
+                    <select name="cuenta" id="cuenta" onchange="tickets_cuenta(this.value, \'todos\')">
                         <option value="0">Selecciona una cuenta</option>';
 $ResCuentas=mysqli_query($conn, "SELECT Consecutivo, Empresa FROM cuentas ORDER BY Empresa ASC");
 while($RowCuentas=mysqli_fetch_array($ResCuentas)){
@@ -37,7 +37,7 @@ if($_POST["cuenta"]>0)
                     </tr>
                 </thead>
                 <tbody>';
-    $ResTickets=mysqli_query($conn, "SELECT * FROM tickets WHERE Cuenta='".$_POST["cuenta"]."' ORDER BY Fecha DESC");
+    $ResTickets=mysqli_query($conn, "SELECT * FROM tickets WHERE Cuenta='".$_POST["cuenta"]."' AND Status LIKE '".($_POST["estatus"]=='todos' ? '%' : $_POST["estatus"])."' ORDER BY Fecha DESC");
     $bgcolor="#F0FFF0";
     while($RResT = mysqli_fetch_array($ResTickets))
     {
@@ -79,7 +79,38 @@ $(document).ready( function () {
             url: 'https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json'
         },
         order: [[0, 'desc']],
-        dom: 'Bfrtip'
+        dom: 'Bfrtip',
+        buttons: [
+            <?php if($_POST["estatus"]!='todos'){?>
+            {
+                text: 'Todos',
+                action: function ( e, dt, node, config ) {
+                    tickets_cuenta('<?php echo $_POST["cuenta"]; ?>', 'todos');
+                }
+            },
+            <?php } if($_POST["estatus"]!='Pendiente'){?>
+            {
+                text: 'Pendiente',
+                action: function ( e, dt, node, config ) {
+                    tickets_cuenta('<?php echo $_POST["cuenta"]; ?>', 'Pendiente');
+                }
+            },
+            <?php } if($_POST["estatus"]!='Atendiendo'){?>
+            {
+                text: 'Atendiendo',
+                action: function ( e, dt, node, config ) {
+                    tickets_cuenta('<?php echo $_POST["cuenta"]; ?>', 'Atendiendo');
+                }
+            },
+            <?php } if($_POST["estatus"]!='Finalizado'){?>
+            {
+                text: 'Finalizado',
+                action: function ( e, dt, node, config ) {
+                    tickets_cuenta('<?php echo $_POST["cuenta"]; ?>', 'Finalizado');
+                }
+            }
+            <?php } ?>
+        ]
     });
 });
 </script>

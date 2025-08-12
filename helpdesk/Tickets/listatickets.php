@@ -52,17 +52,21 @@
 	
 	$ResTickets=mysqli_query($conn, "SELECT * FROM tickets WHERE Status='".$_POST["status"]."' AND Cuenta LIKE '".$cuenta."' AND Sucursal LIKE '".$suc."' AND Tecnico LIKE '".$tec."' ORDER BY Fecha ASC");
 	
-	$cadena.=$mensaje.'<table border="1" bordercolor="#FFFFFF" cellpadding="5" cellspacing="0" width="98%">
+	$cadena.=$mensaje.'<div style="width: 100%; display: flex; justify-content: center; flex-wrap: wrap;">
+                <div style="width: 90%">
+                <table id="table_lista_tickets" class="stripe row-border order-column nowrap" style="width: 100% !important">
+					<thead>
 							<tr>
-								<td align="center" class="textotitulo2" bgcolor="#FF7F24">Num.</td>
-								<td align="center" class="textotitulo2" bgcolor="#FF7F24">Fecha</td>
-								<td align="center" class="textotitulo2" bgcolor="#FF7F24">Cuenta</td>
-								<td align="center" class="textotitulo2" bgcolor="#FF7F24">Sucursal</td>
-								<td align="center" class="textotitulo2" bgcolor="#FF7F24">Area</td>
-								<td align="center" class="textotitulo2" bgcolor="#FF7F24">Respuesta</td>
-								<td align="center" class="textotitulo2" bgcolor="#FF7F24">Solución</td>
-								<td align="center" class="textotitulo2" bgcolor="#FF7F24"></td>';
-	$cadena.='	</tr>';
+								<th align="center" class="textotitulo2" bgcolor="#FF7F24">Num.</th>
+								<th align="center" class="textotitulo2" bgcolor="#FF7F24">Fecha</th>
+								<th align="center" class="textotitulo2" bgcolor="#FF7F24">Cuenta</th>
+								<th align="center" class="textotitulo2" bgcolor="#FF7F24">Sucursal</th>
+								<th align="center" class="textotitulo2" bgcolor="#FF7F24">Area</th>
+								<th align="center" class="textotitulo2" bgcolor="#FF7F24">Respuesta</th>
+								<th align="center" class="textotitulo2" bgcolor="#FF7F24">Solución</th>
+								<th align="center" class="textotitulo2" bgcolor="#FF7F24"></th>';
+	$cadena.='	</tr></thead>
+					<tbody>';
 	if($_POST["status"]=='Pendiente'){$clase="textoRojo";}
 	else if($_POST["status"]=='Atendiendo'){$clase='textoAmarillo';}
 	else if($_POST["status"]=='Finalizado'){$clase='textoVerde';}
@@ -97,7 +101,7 @@
 		if ($bgcolor=="#F0FFF0"){$bgcolor="#CCCCCC";}
 		else if ($bgcolor=="#CCCCCC"){$bgcolor="#F0FFF0";}
 	}
-    $cadena.='</table>';
+    $cadena.='</tbody></table></div></div>';
     
     echo $cadena;
 
@@ -112,6 +116,24 @@ function dias_pasados($fecha_inicial, $fecha_final)
 }
 ?>
 <script>
+	$(document).ready( function () {
+    var table = $('#table_lista_tickets').DataTable({
+        scrollX: true,
+        scrollY: 500,
+        scrollCollapse: true,
+        scroller:       true,
+        deferRender:    true,
+        paging: true,
+        pageLength: 50,
+        language: {
+            decimal: '.',
+            thousands: ',',
+            url: 'https://cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json'
+        },
+        order: [[0, 'desc']],
+        dom: 'Bfrtip'
+    });
+});
 function detalle_ticket(ticket){
 	$.ajax({
 				type: 'POST',

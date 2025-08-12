@@ -57,7 +57,7 @@ include ("conexion.php");
 					<li class="submenu">
 						<a href="#"><i class="fa fa-file-text-o"></i>Reportes<span class="caret fa fa-caret-down"></span></a>
 						<ul class="children">
-							<li><a href="#" onclick="tickets_cuenta('0')"><span class="fa fa-file-text"></span>Tickets Por Cuenta</a></li>
+							<li><a href="#" onclick="tickets_cuenta('0', 'todos')"><span class="fa fa-file-text"></span>Tickets Por Cuenta</a></li>
 						</ul>
 					</li>
 					<li><a href="#"><i class="fa fa-desktop" aria-hidden="true"></i>Inventario</a></li>
@@ -145,11 +145,11 @@ function status_ticket(){
 		$('#contenido').html(info);
 	});
 }
-function tickets_cuenta(cuenta){
+function tickets_cuenta(cuenta, estatus){
 	$.ajax({
 				type: 'POST',
 				url : 'Reportes/tickets_cuenta.php', 
-				data: 'cuenta=' + cuenta
+				data: 'cuenta=' + cuenta + '&estatus=' + estatus
 	}).done (function ( info ){
 		$('#contenido').html(info);
 	});
