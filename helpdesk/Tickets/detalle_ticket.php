@@ -31,7 +31,7 @@
 	$cadena='<form name="atendiendot" id="atendiendot">
 				<div class="tabla">
 					<div class="c100 c_derecha" style="background: #ffffff;">
-						<a href="Tickets/ticket.php?consecutivo='.$RResTicket["Consecutivo"].'" target="_blank"><i class="fas fa-print" style="font-size: 25px"></i></a>
+						<a href="#" onclick="historial_equipo(\''.$RResTicket["Consecutivo"].'\')"><i class="fa-solid fa-clock-rotate-left" style="font-size: 25px"></i></a>&nbsp;<a href="Tickets/ticket.php?consecutivo='.$RResTicket["Consecutivo"].'" target="_blank"><i class="fas fa-print" style="font-size: 25px"></i></a>
 					</div>
 					<div class="titprin">
 						Detalles del Ticket Num. '.$RResTicket["ConsecutivoInterno"].'
