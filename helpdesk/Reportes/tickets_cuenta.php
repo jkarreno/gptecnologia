@@ -27,13 +27,12 @@ if($_POST["cuenta"]>0)
                 <thead>
                     <tr>
                         <th align="center" class="textotitulo2" bgcolor="#FF7F24">Num Ticket.</th>
+                        <th align="center" class="textotitulo2" bgcolor="#FF7F24">Estatus</th>
                         <th align="center" class="textotitulo2" bgcolor="#FF7F24">Fecha</th>
-                        <th align="center" class="textotitulo2" bgcolor="#FF7F24">Sucursal</th>
-                        <th align="center" class="textotitulo2" bgcolor="#FF7F24">Area</th>
                         <th align="center" class="textotitulo2" bgcolor="#FF7F24">Equipo</th>
                         <th align="center" class="textotitulo2" bgcolor="#FF7F24">Num Serie</th>
                         <th align="center" class="textotitulo2" bgcolor="#FF7F24">Falla</th>
-                        <th align="center" class="textotitulo2" bgcolor="#FF7F24">Estatus</th>
+                        <th align="center" class="textotitulo2" bgcolor="#FF7F24">Solución</th>
                     </tr>
                 </thead>
                 <tbody>';
@@ -43,15 +42,15 @@ if($_POST["cuenta"]>0)
     {
         $ResSucursal=mysqli_fetch_array(mysqli_query($conn, "SELECT Nombre FROM sucursales WHERE Consecutivo='".$RResT["Sucursal"]."' AND Cuenta = '".$_POST["cuenta"]."' LIMIT 1"));
         $ResEquipo=mysqli_fetch_array(mysqli_query($conn, "SELECT Equipo FROM equipos WHERE Consecutivo='".$RResT["Equipo"]."' LIMIT 1"));
+        $ResSolucion=mysqli_fetch_array(mysqli_query($conn, "SELECT Solucion FROM solucionticket WHERE Ticket ='".$RResT["Consecutivo"]."' ORDER BY Consecutivo DESC LIMIT 1"));
         $cadena.='  <tr>
-                        <td align="center" bgcolor="'.$bgcolor.'">'.$RResT["Consecutivo"].'</td>
-                        <td align="center" bgcolor="'.$bgcolor.'">'.$RResT["Fecha"].'</td>
-                        <td align="center" bgcolor="'.$bgcolor.'">'.(($ResSucursal["Nombre"] != NULL AND $ResSucursal["Nombre"] != '') ? $ResSucursal["Nombre"] : '---').'</td>
-                        <td align="center" bgcolor="'.$bgcolor.'">'.$RResT["Area"].'</td>
-                        <td align="center" bgcolor="'.$bgcolor.'">'.(($ResEquipo["Equipo"] != NULL AND $ResEquipo["Equipo"] != '') ? $ResEquipo["Equipo"] : '---').'</td>
-                        <td align="center" bgcolor="'.$bgcolor.'">'.$RResT["NumSerie"].'</td>
-                        <td align="center" bgcolor="'.$bgcolor.'">'.utf8_encode($RResT["Falla"]).'</td>
-                        <td align="center" bgcolor="'.$bgcolor.'">'.$RResT["Status"].'</td>
+                        <td align="center" bgcolor="'.$bgcolor.'"><a href="#" onclick="detalle_ticket(\''.$RResT["Consecutivo"].'\')">'.$RResT["Consecutivo"].'</a></td>
+                        <td align="center" bgcolor="'.$bgcolor.'"><a href="#" onclick="detalle_ticket(\''.$RResT["Consecutivo"].'\')">'.$RResT["Status"].'</a></td>
+                        <td align="center" bgcolor="'.$bgcolor.'"><a href="#" onclick="detalle_ticket(\''.$RResT["Consecutivo"].'\')">'.$RResT["Fecha"].'</td>
+                        <td align="center" bgcolor="'.$bgcolor.'"><a href="#" onclick="detalle_ticket(\''.$RResT["Consecutivo"].'\')">'.(($ResEquipo["Equipo"] != NULL AND $ResEquipo["Equipo"] != '') ? $ResEquipo["Equipo"] : '---').'</a></td>
+                        <td align="center" bgcolor="'.$bgcolor.'"><a href="#" onclick="detalle_ticket(\''.$RResT["Consecutivo"].'\')">'.$RResT["NumSerie"].'</a></td>
+                        <td align="left" bgcolor="'.$bgcolor.'"><a href="#" onclick="detalle_ticket(\''.$RResT["Consecutivo"].'\')">'.utf8_encode($RResT["Falla"]).'</a></td>
+                        <td align="left" bgcolor="'.$bgcolor.'"><a href="#" onclick="detalle_ticket(\''.$RResT["Consecutivo"].'\')">'.utf8_encode($ResSolucion["Solucion"]).'</a></td>
                     </tr>';
         if ($bgcolor=="#F0FFF0"){$bgcolor="#CCCCCC";}
 		else if ($bgcolor=="#CCCCCC"){$bgcolor="#F0FFF0";}

@@ -84,3 +84,4 @@ function mueveRelojNC(){
 
    	setTimeout("mueveRelojNC()",1000) 
 } 
+

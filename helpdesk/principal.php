@@ -25,7 +25,7 @@ include ("conexion.php");
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	
-	<script src="https://kit.fontawesome.com/2df1cf6d50.js" crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/a5e678cc82.js" crossorigin="anonymous"></script>
 
 	<link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css">
 	<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
@@ -145,11 +145,32 @@ function status_ticket(){
 		$('#contenido').html(info);
 	});
 }
+
 function tickets_cuenta(cuenta, estatus){
 	$.ajax({
 				type: 'POST',
 				url : 'Reportes/tickets_cuenta.php', 
 				data: 'cuenta=' + cuenta + '&estatus=' + estatus
+	}).done (function ( info ){
+		$('#contenido').html(info);
+	});
+}
+
+function detalle_ticket(ticket){
+	$.ajax({
+				type: 'POST',
+				url : 'Tickets/detalle_ticket.php',
+                data: 'ticket=' + ticket
+	}).done (function ( info ){
+		$('#contenido').html(info);
+	});
+}
+
+function historial_equipo(ticket){
+	$.ajax({
+				type: 'POST',
+				url : 'Tickets/historial_equipo.php',
+				data: 'ticket=' + ticket
 	}).done (function ( info ){
 		$('#contenido').html(info);
 	});

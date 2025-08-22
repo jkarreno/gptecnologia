@@ -134,15 +134,7 @@ function dias_pasados($fecha_inicial, $fecha_final)
         dom: 'Bfrtip'
     });
 });
-function detalle_ticket(ticket){
-	$.ajax({
-				type: 'POST',
-				url : 'Tickets/detalle_ticket.php',
-                data: 'ticket=' + ticket
-	}).done (function ( info ){
-		$('#contenido').html(info);
-	});
-}
+
 function asigna_tecnico(ticket){
 	$.ajax({
 				type: 'POST',
